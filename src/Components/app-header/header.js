@@ -5,7 +5,10 @@ const Header=()=>{
     return(
         <div className="header d-flex">
             <h3>
-                Star DB
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a href="#">
+                    Star DB
+                </a>
             </h3>
             <ul className="d-flex">
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
