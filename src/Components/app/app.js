@@ -6,7 +6,6 @@ import ItemList from "../item-list/item-list";
 import PersonDetails from "../person-details/person-details";
 
 export default class App extends Component{
-    //justify-content-between
     render() {
         return(
             <div className="app">
@@ -14,10 +13,10 @@ export default class App extends Component{
                 <RandomPlanet/>
                 <div className="row mb2">
                     <div className="col-md-6">
-                        <ItemList />
+                        <ItemList/>
                     </div>
                     <div className="col-md-6">
-                        <PersonDetails />
+                        <PersonDetails/>
                     </div>
                 </div>
             </div>
