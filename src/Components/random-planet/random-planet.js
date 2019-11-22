@@ -7,30 +7,43 @@ import ErrorIndicator from "../error-indicator/error-indicator";
 export default class RandomPlanet extends Component{
     constructor(){
         super();
+        console.log("constructor");
         this.state = {
             planet: {},
             loading: true,
             error: false
         };
+    }
+
+    componentDidMount() {
+        console.log("componentDidMount");
         this.updatePlanet();
+        this.interval = setInterval(this.updatePlanet, 10000);
+        //clearInterval(this.interval);
+    }
+
+    componentWillUnmount() {
+        console.log("componentWillUnmount");
     }
 
     swapiService = new SwapiService();
 
     onPlanetLoaded = (planet)=>{
-        this.setState({planet, loading: false });
+        this.setState({planet, loading: false});
     };
 
     onError=(error)=>{
         this.setState({error: true, loading: false});
     };
 
-    updatePlanet(){
+    updatePlanet=()=>{
+        console.log("Update");
         const id = Math.floor(Math.random() * 21) + 2;
         this.swapiService.getPlanet(id).then(this.onPlanetLoaded).catch(this.onError);
     };
 
     render() {
+        console.log("render");
         const {planet, loading, error} = this.state;
         const hasData = !(loading || error);
         const spinner = loading ? <Spinner/> : null;
