@@ -11,16 +11,20 @@ export default class PersonDetails extends Component{
         super(props);
         this.state = {
             person: {},
-            loading: true,
-            error: false
+            loading: true
         }
     }
 
     componentDidMount() {
         console.log("componentDidMount person");
         this.updatePerson();
-        this.interval = setInterval(this.updatePerson, 10000);
-        //clearInterval(this.interval);
+    }
+
+    componentDidUpdate(prevProps) {
+        console.log("componentDidUpdate person");
+        if(this.props.personId !== prevProps.personId){
+            this.updatePerson();
+        }
     }
 
     swapiService = new SwapiService();
@@ -29,27 +33,28 @@ export default class PersonDetails extends Component{
         this.setState({person, loading: false});
     };
 
-    onError=(error)=>{
-        this.setState({error: true, loading: false});
-    };
-
     updatePerson=()=>{
         console.log("Update person");
-        const id = Math.floor(Math.random() * 15) + 1;
-        this.swapiService.getPerson(id).then(this.onPersonLoaded).catch(this.onError);
+        const {personId} = this.props;
+        if(!personId){
+            return;
+        }
+        this.swapiService.getPerson(personId).then(this.onPersonLoaded);
     };
 
     render() {
         console.log("render person");
         const {person, loading, error} = this.state;
-        const hasData = !(loading || error);
+        if(!person){
+            return <span>Select a person from a list</span>;
+        }
+
+        const hasData = !(loading);
         const spinner = loading ? <Spinner/> : null;
         const content = hasData ? <PersonView person={person}/> : null;
-        const errorMessage = error ? <ErrorIndicator/> : null;
 
         return(
             <div className="person-details card">
-                {errorMessage}
                 {spinner}
                 {content}
             </div>

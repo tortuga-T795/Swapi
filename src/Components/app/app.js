@@ -11,7 +11,7 @@ export default class App extends Component{
         super(props);
         this.state = {
             showRandomPlanet: true,
-            selectedPerson: null
+            selectedPerson: 1
         };
     }
 
