@@ -5,8 +5,8 @@ import Spinner from "../spinner/spinner";
 
 export default class ItemList extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             peopleList: null
         };
@@ -20,6 +20,12 @@ export default class ItemList extends Component {
         });
     }
 
+    renderItem(arr){
+        return arr.map(({id, name})=>{
+            return <li className="list-group-item" key={id} onClick={()=>this.props.onItemSelected(id)}>{name}</li>
+        })
+    }
+
     render() {
         const {peopleList} = this.state;
 
@@ -27,11 +33,11 @@ export default class ItemList extends Component {
             return <Spinner/>;
         }
 
+        const items = this.renderItem(peopleList);
+
         return(
             <ul className="item-list list-group">
-                <li className="list-group-item">Luke Skywalker</li>
-                <li className="list-group-item">Darth Vader</li>
-                <li className="list-group-item">R2-D2</li>
+                {items}
             </ul>
         )
     }
