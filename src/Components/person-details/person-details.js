@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './person-details.css';
 import SwapiService from "../../services/swapi-service";
 import Spinner from "../spinner/spinner";
-import ErrorIndicator from "../error-indicator/error-indicator";
+import ErrorButton from "../error-button/error-button";
 
 export default class PersonDetails extends Component{
 
@@ -20,9 +20,10 @@ export default class PersonDetails extends Component{
         this.updatePerson();
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
         console.log("componentDidUpdate person");
         if(this.props.personId !== prevProps.personId){
+            this.setState({loading: true});
             this.updatePerson();
         }
     }
@@ -44,7 +45,7 @@ export default class PersonDetails extends Component{
 
     render() {
         console.log("render person");
-        const {person, loading, error} = this.state;
+        const {person, loading} = this.state;
         if(!person){
             return <span>Select a person from a list</span>;
         }
@@ -84,6 +85,7 @@ const PersonView=({person})=>{
                         <span>{eyeColor}</span>
                     </li>
                 </ul>
+                <ErrorButton/>
             </div>
         </React.Fragment>
     )
