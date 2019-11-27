@@ -1,8 +1,17 @@
-.app {
-    margin-left: 50px;
-    margin-right: 50px;
-}
-
 .toggle-planet {
     margin-bottom: 20px;
+}
+
+.button-row {
+     margin: 0 0 1rem 0;
+ }
+
+.button-row button {
+    margin-right: 1rem;
+}
+
+.stardb-app .row {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 1rem;
 }

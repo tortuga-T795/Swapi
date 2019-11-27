@@ -10,8 +10,7 @@ export default class PersonDetails extends Component{
         console.log("constructor person");
         super(props);
         this.state = {
-            person: {},
-            loading: true
+            person: null
         }
     }
 
@@ -23,7 +22,6 @@ export default class PersonDetails extends Component{
     componentDidUpdate(prevProps, prevState) {
         console.log("componentDidUpdate person");
         if(this.props.personId !== prevProps.personId){
-            this.setState({loading: true});
             this.updatePerson();
         }
     }
@@ -31,7 +29,7 @@ export default class PersonDetails extends Component{
     swapiService = new SwapiService();
 
     onPersonLoaded = (person)=>{
-        this.setState({person, loading: false});
+        this.setState({person});
     };
 
     updatePerson=()=>{
@@ -45,18 +43,15 @@ export default class PersonDetails extends Component{
 
     render() {
         console.log("render person");
-        const {person, loading} = this.state;
+        const {person} = this.state;
         if(!person){
             return <span>Select a person from a list</span>;
         }
 
-        const hasData = !(loading);
-        const spinner = loading ? <Spinner/> : null;
-        const content = hasData ? <PersonView person={person}/> : null;
+        const content = <PersonView person={person}/>;
 
         return(
             <div className="person-details card">
-                {spinner}
                 {content}
             </div>
         )

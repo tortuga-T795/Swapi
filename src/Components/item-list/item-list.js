@@ -8,15 +8,15 @@ export default class ItemList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            peopleList: null
+            itemList: null
         };
     }
 
-    swapiService = new SwapiService();
-
     componentDidMount() {
-        this.swapiService.getAllPeople().then((peopleList)=>{
-            this.setState({peopleList});
+        const {getData} = this.props;
+
+        getData().then((itemList)=>{
+            this.setState({itemList});
         });
     }
 
@@ -27,13 +27,13 @@ export default class ItemList extends Component {
     }
 
     render() {
-        const {peopleList} = this.state;
+        const {itemList} = this.state;
 
-        if(!peopleList){
+        if(!itemList){
             return <Spinner/>;
         }
 
-        const items = this.renderItem(peopleList);
+        const items = this.renderItem(itemList);
 
         return(
             <ul className="item-list list-group">
