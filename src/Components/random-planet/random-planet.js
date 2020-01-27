@@ -32,7 +32,7 @@ export default class RandomPlanet extends Component{
         this.setState({planet, loading: false});
     };
 
-    onError=(error)=>{
+    onError=(err)=>{
         this.setState({error: true, loading: false});
     };
 
@@ -85,5 +85,5 @@ const PlanetView=({planet})=>{
                 </ul>
             </div>
         </React.Fragment>
-    )
+    );
 };
