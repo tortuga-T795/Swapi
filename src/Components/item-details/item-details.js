@@ -29,19 +29,19 @@ export default class ItemDetails extends Component{
 
     componentDidMount() {
         console.log("componentDidMount item");
-        this.updatePerson();
+        this.updateItem();
     }
 
     componentDidUpdate(prevProps, prevState) {
         console.log("componentDidUpdate item");
         if(this.props.itemId !== prevProps.itemId){
-            this.updatePerson();
+            this.updateItem();
         }
     }
 
     swapiService = new SwapiService();
 
-    updatePerson() {
+    updateItem() {
         console.log("Update item");
         const {itemId, getData, getImageUrl} = this.props;
         if(!itemId){
@@ -64,7 +64,7 @@ export default class ItemDetails extends Component{
         const content = <ItemView item={item} image={image} children={children}/>;
 
         return(
-            <div className="person-details card">
+            <div>
                 {content}
             </div>
         )
@@ -76,13 +76,13 @@ const ItemView=({item, image, children})=>{
 
     return(
         <React.Fragment>
-            <div className="person-details card">
-                <img className="person-image" src={image} alt="person image error"/>
+            <div className="item-details card">
+                <img className="item-image" src={image} alt="item image error"/>
                 <div className="card-body">
                     <h4>{name}</h4>
                     <ul className="list-group list-group-flush">
                         {
-                            React.Children.map(children, (child) =>{
+                            React.Children.map(children, (child) => {
                                 return React.cloneElement(child, {item});
                             })
                         }

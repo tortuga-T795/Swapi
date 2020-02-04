@@ -7,14 +7,16 @@ import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from "../error-boundry/error-boundry";
 import Row from "../row/row";
 import ItemDetails, {Record} from "../item-details/item-details";
+import PeoplePage from "../people-page/people-page";
+import ItemList from "../item-list/item-list";
+import {PersonList, StarshipList, PlanetList, PersonDetails, PlanetDetails, StarshipDetails} from "../sw-components";
 
 export default class App extends Component {
 
     swapiService = new SwapiService();
 
     state = {
-        showRandomPlanet: true,
-        hasError: false
+        showRandomPlanet: true
     };
 
     toggleRandomPlanet = () => {
@@ -25,21 +27,13 @@ export default class App extends Component {
         });
     };
 
-    componentDidCatch() {
-        this.setState({ hasError: true });
-    }
-
     render() {
-
-        if (this.state.hasError) {
-            return <ErrorIndicator />
-        }
 
         const planet = this.state.showRandomPlanet ?
             <RandomPlanet/> :
             null;
 
-        const {getPerson, getStarship, getPersonImage, getStarshipImage} = this.swapiService;
+        const {getPerson, getStarship, getPersonImage, getStarshipImage, getAllPeople, getAllPlanets} = this.swapiService;
         const personDatails = (<ItemDetails itemId={11} getData={getPerson} getImageUrl={getPersonImage}>
             <Record field="gender" label="Gender"/>
             <Record field="birthYear" label="Birthday"/>
@@ -59,7 +53,13 @@ export default class App extends Component {
                 <div className="stardb-app">
                     <Header />
 
-                    <Row left={personDatails} right={starShipDatails}/>
+                    <PersonDetails itemId={11}/>
+                    <StarshipDetails itemId={9}/>
+                    <PlanetDetails itemId={5}/>
+
+                    <PersonList/>
+                    <StarshipList/>
+                    <PlanetList/>
 
                 </div>
             </ErrorBoundry>
@@ -67,8 +67,20 @@ export default class App extends Component {
     }
 }
 
+/*  отображение Person и StarShip
+            <ErrorBoundry>
+                <div className="stardb-app">
+                    <Header />
 
-/*
+                    <Row left={personDatails} right={starShipDatails}/>
+
+                </div>
+            </ErrorBoundry>
+
+
+Other
+
+
                     { planet }
 
                     <div className="row mb2 button-row">
